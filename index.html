@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Donations</title>
+    <meta name="description" content="Crypto Donations">
+    <link rel="icon" href="favicon.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #0f1f2f;
+            color: #d5d7d8;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+            margin: 0;
+        }
+
+        h1 {
+            font-family: 'Jost', sans-serif;
+            font-weight: 500;
+            font-size: 2.5em;
+            text-transform: uppercase;
+            margin: 20px 0;
+        }
+
+        p {
+            font-size: 1.2em;
+            margin: 15px 0;
+            line-height: 1.5;
+        }
+
+        a {
+            color: #1d9bf0;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .logo {
+            width: 100px;
+            height: auto;
+            display: block;
+            margin: 20px auto;
+        }
+
+        .wallet {
+            margin: 20px 0;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .wallet-header {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            text-align: left;
+        }
+
+        .wallet-label {
+            font-family: 'Jost', sans-serif;
+            font-weight: 500;
+            font-size: 1.5em;
+            margin: 10px 10px 10px 0;
+        }
+
+        .wallet-address {
+            font-family: monospace;
+            color: #d5d7d8;
+            font-size: 1em;
+            word-break: break-all;
+            margin: 10px 0;
+            text-align: left;
+        }
+
+        .copy-btn {
+            display: inline-block;
+            background-color: #b98d2a;
+            color: #ffffff;
+            padding: 8px 16px;
+            margin: 5px;
+            border-radius: 25px;
+            font-size: 1em;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .qr-toggle {
+            display: inline-block;
+            background-color: #1970bd;
+            color: #ffffff;
+            padding: 8px 16px;
+            margin: 5px;
+            border-radius: 25px;
+            font-size: 1em;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .qr-toggle.active {
+            background-color: #c7141a;
+            color: #ffffff;
+        }
+
+        .qr-code {
+            display: none;
+            margin: 10px 0;
+            text-align: left;
+        }
+
+        .qr-code img {
+            max-width: 150px;
+            height: auto;
+        }
+
+        .emoji {
+            font-size: 1.5em;
+        }
+    </style>
+</head>
+<body>
+    <img src="demianismlogo.png" alt="Demianism Logo" class="logo">
+    <h1>CRYPTO DONATIONS</h1>
+    <p>Support Demianism and the work of Barabeke with BTC, ETH, SOL, ADA, DOGE, XMR.</p>
+    <p>You can send your donations to the following wallets:</p>
+
+    <div class="wallet">
+        <div class="wallet-header">
+            <div class="wallet-label">Bitcoin (BTC)</div>
+            <button class="copy-btn" onclick="copyToClipboard('bc1q36jacu2we7ft9lvgxeyj5vah7yxglnhezavrye')">Copy</button>
+            <button class="qr-toggle" id="toggle-btc" onclick="toggleQR('qr-btc', this)">Show QR</button>
+        </div>
+        <div class="wallet-address">bc1q36jacu2we7ft9lvgxeyj5vah7yxglnhezavrye</div>
+        <div class="qr-code" id="qr-btc">
+            <img src="qr-btc.png" alt="BTC QR Code">
+        </div>
+    </div>
+
+    <div class="wallet">
+        <div class="wallet-header">
+            <div class="wallet-label">Ethereum (ETH)</div>
+            <button class="copy-btn" onclick="copyToClipboard('0x5f11b2A7e3A5a7aCb270C3984b125C3F15d61Df2')">Copy</button>
+            <button class="qr-toggle" id="toggle-eth" onclick="toggleQR('qr-eth', this)">Show QR</button>
+        </div>
+        <div class="wallet-address">0x5f11b2A7e3A5a7aCb270C3984b125C3F15d61Df2</div>
+        <div class="qr-code" id="qr-eth">
+            <img src="qr-eth.png" alt="ETH QR Code">
+        </div>
+    </div>
+
+    <div class="wallet">
+        <div class="wallet-header">
+            <div class="wallet-label">Solana (SOL)</div>
+            <button class="copy-btn" onclick="copyToClipboard('44X4RsXKJYyTFnY62rEL1fFJDjpc2VvUvrx2XEviHsRg')">Copy</button>
+            <button class="qr-toggle" id="toggle-sol" onclick="toggleQR('qr-sol', this)">Show QR</button>
+        </div>
+        <div class="wallet-address">44X4RsXKJYyTFnY62rEL1fFJDjpc2VvUvrx2XEviHsRg</div>
+        <div class="qr-code" id="qr-sol">
+            <img src="qr-sol.png" alt="SOL QR Code">
+        </div>
+    </div>
+
+    <div class="wallet">
+        <div class="wallet-header">
+            <div class="wallet-label">Cardano (ADA)</div>
+            <button class="copy-btn" onclick="copyToClipboard('addr1q9d72f4lmtaj0gcddc5nrqceshmfv7vw3w8cjdzfexuzex2s2mpmtae6sy78qvwqs8py3xntacc335t45auntkvpf86s483n5j')">Copy</button>
+            <button class="qr-toggle" id="toggle-ada" onclick="toggleQR('qr-ada', this)">Show QR</button>
+        </div>
+        <div class="wallet-address">addr1q9d72f4lmtaj0gcddc5nrqceshmfv7vw3w8cjdzfexuzex2s2mpmtae6sy78qvwqs8py3xntacc335t45auntkvpf86s483n5j</div>
+        <div class="qr-code" id="qr-ada">
+            <img src="qr-ada.png" alt="ADA QR Code">
+        </div>
+    </div>
+
+    <div class="wallet">
+        <div class="wallet-header">
+            <div class="wallet-label">Doge (DOGE)</div>
+            <button class="copy-btn" onclick="copyToClipboard('DFjTLgK7ELhLYWk7vcYW6ZQSKq1mjt9nLM')">Copy</button>
+            <button class="qr-toggle" id="toggle-doge" onclick="toggleQR('qr-doge', this)">Show QR</button>
+        </div>
+        <div class="wallet-address">DFjTLgK7ELhLYWk7vcYW6ZQSKq1mjt9nLM</div>
+        <div class="qr-code" id="qr-doge">
+            <img src="qr-doge.png" alt="DOGE QR Code">
+        </div>
+    </div>
+
+    <div class="wallet">
+        <div class="wallet-header">
+            <div class="wallet-label">Monero (XMR)</div>
+            <button class="copy-btn" onclick="copyToClipboard('41jgBqVTvAWP3pSsmCA1FoYA3sNq6JhCbJZ4RJQGwBGwbc94tHzP3XF9G8bM4aFZFf1jxhbMfWPtWDZuCUspL6e1SRzZTc5')">Copy</button>
+            <button class="qr-toggle" id="toggle-xmr" onclick="toggleQR('qr-xmr', this)">Show QR</button>
+        </div>
+        <div class="wallet-address">41jgBqVTvAWP3pSsmCA1FoYA3sNq6JhCbJZ4RJQGwBGwbc94tHzP3XF9G8bM4aFZFf1jxhbMfWPtWDZuCUspL6e1SRzZTc5</div>
+        <div class="qr-code" id="qr-xmr">
+            <img src="qr-xmr.png" alt="XMR QR Code">
+        </div>
+    </div>
+
+    <p>If you want to confirm the addresses, feel free to reach out to Barabeke <a href="https://x.com/barabeke">on X</a> or <a href="https://t.me/barabeke">on Telegram</a>.</p>
+
+    <p>If you haven't downloaded the book Demianism 1.0 yet, get it <a href="https://demianism.org">here</a>.</p>
+
+    <p>Blessed be those who through their donations will give Demianism a chance <span class="emoji">🙏</span></p>
+
+    <script>
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Address copied to clipboard!');
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        }
+
+        function toggleQR(id, button) {
+            const qrDiv = document.getElementById(id);
+            if (qrDiv.style.display === 'block') {
+                qrDiv.style.display = 'none';
+                button.textContent = 'Show QR';
+                button.classList.remove('active');
+            } else {
+                qrDiv.style.display = 'block';
+                button.textContent = 'Hide QR';
+                button.classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html>
