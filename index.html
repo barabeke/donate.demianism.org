@@ -1,232 +1,513 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crypto Donations</title>
-    <meta name="description" content="Crypto Donations">
-    <link rel="icon" href="favicon.png" type="image/png">
-    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
-    <style>
-        body {
-            background-color: #0f1f2f;
-            color: #d5d7d8;
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 20px;
-            margin: 0;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crypto Donations</title>
+  <meta name="description" content="Support Demianism with crypto donations">
 
-        h1 {
-            font-family: 'Jost', sans-serif;
-            font-weight: 500;
-            font-size: 2.5em;
-            text-transform: uppercase;
-            margin: 20px 0;
-        }
+  <!-- Favicons – using your existing files -->
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="favicon-96x96.png" type="image/png" sizes="96x96">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" sizes="180x180">
+  <link rel="manifest" href="site.webmanifest">
 
-        p {
-            font-size: 1.2em;
-            margin: 15px 0;
-            line-height: 1.5;
-        }
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@500;700&display=swap" rel="stylesheet">
 
-        a {
-            color: #1d9bf0;
-            text-decoration: none;
-        }
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      font-family: 'Libre Baskerville', serif;
+      color: #6864bb;
+      font-size: 21px;
+      line-height: 1.8;
 
-        a:hover {
-            text-decoration: underline;
-        }
+      background: radial-gradient(circle at 20% 20%, rgba(53, 50, 126, 0.28), transparent 60%),
+                  radial-gradient(circle at 80% 30%, rgba(53, 50, 126, 0.22), transparent 65%),
+                  radial-gradient(circle at 50% 80%, rgba(53, 50, 126, 0.35), transparent 70%),
+                  #000000;
+    }
 
-        .logo {
-            width: 100px;
-            height: auto;
-            display: block;
-            margin: 20px auto;
-        }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+    }
 
-        .wallet {
-            margin: 20px 0;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
+    /* Fixed Home Button – pure PNG, no forced shape or background */
+    .home-button {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      display: block;
+      width: 64px;
+      height: 64px;
+      transition: all 0.25s ease;
+    }
 
-        .wallet-header {
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-            text-align: left;
-        }
+    .home-button:hover {
+      transform: scale(1.15);
+      filter: drop-shadow(0 4px 12px rgba(104, 100, 187, 0.5));
+    }
 
-        .wallet-label {
-            font-family: 'Jost', sans-serif;
-            font-weight: 500;
-            font-size: 1.5em;
-            margin: 10px 10px 10px 0;
-        }
+    .home-button img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
 
-        .wallet-address {
-            font-family: monospace;
-            color: #d5d7d8;
-            font-size: 1em;
-            word-break: break-all;
-            margin: 10px 0;
-            text-align: left;
-        }
+    .logo {
+      width: 250px;
+      height: auto;
+      max-width: 100%;
+      display: block;
+      margin: 40px auto 30px auto;
+      object-fit: contain;
+    }
 
-        .copy-btn {
-            display: inline-block;
-            background-color: #b98d2a;
-            color: #ffffff;
-            padding: 8px 16px;
-            margin: 5px;
-            border-radius: 25px;
-            font-size: 1em;
-            text-decoration: none;
-            cursor: pointer;
-        }
+    @keyframes glowPulse {
+      0% {
+        text-shadow:
+          0px 0px 6px  rgba(104, 100, 187, 0.85),
+          0px 0px 13px rgba(104, 100, 187, 0.75),
+          0px 0px 27px rgba(104, 100, 187, 0.6),
+          0px 0px 55px rgba(104, 100, 187, 0.45);
+      }
+      50% {
+        text-shadow:
+          0px 0px 9px  rgba(104, 100, 187, 1),
+          0px 0px 20px rgba(104, 100, 187, 0.9),
+          0px 0px 42px rgba(104, 100, 187, 0.75),
+          0px 0px 75px rgba(104, 100, 187, 0.55);
+      }
+      100% {
+        text-shadow:
+          0px 0px 6px  rgba(104, 100, 187, 0.85),
+          0px 0px 13px rgba(104, 100, 187, 0.75),
+          0px 0px 27px rgba(104, 100, 187, 0.6),
+          0px 0px 55px rgba(104, 100, 187, 0.45);
+      }
+    }
 
-        .qr-toggle {
-            display: inline-block;
-            background-color: #1970bd;
-            color: #ffffff;
-            padding: 8px 16px;
-            margin: 5px;
-            border-radius: 25px;
-            font-size: 1em;
-            text-decoration: none;
-            cursor: pointer;
-        }
+    h1 {
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      font-size: 43px;
+      text-transform: uppercase;
+      margin: 35px 0 12px 0;
+      color: #cfcfd4;
+      line-height: 1.55;
+      letter-spacing: 10px;
+      transform: scaleX(1.1);
+      animation: glowPulse 11s ease-in-out infinite;
+    }
 
-        .qr-toggle.active {
-            background-color: #c7141a;
-            color: #ffffff;
-        }
+    p {
+      font-size: 21px;
+      margin: 22px auto;
+      line-height: 1.8;
+      color: #6864bb;
+      max-width: 820px;
+    }
 
-        .qr-code {
-            display: none;
-            margin: 10px 0;
-            text-align: left;
-        }
+    .button-main {
+      display: inline-block;
+      background-color: #35327e;
+      color: #cfcfd4;
+      padding: 14px 24px;
+      margin: 0;
+      border-radius: 30px;
+      font-size: 14px;
+      text-decoration: none;
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.6px;
+      transition: all 0.3s ease;
+      text-align: center;
+      line-height: 1.35;
+      border: 1px solid #6864bb22;
+      cursor: pointer;
+      white-space: nowrap;
+      position: relative;
+      z-index: 2;
+    }
 
-        .qr-code img {
-            max-width: 150px;
-            height: auto;
-        }
+    .button-main:hover {
+      background-color: #6864bb;
+      color: #ffffff;
+      box-shadow: 0px 0px 28px rgba(104, 100, 187, 0.65);
+      transform: translateY(-2px);
+      text-decoration: none;
+      border-color: #6864bb88;
+    }
 
-        .emoji {
-            font-size: 1.5em;
-        }
-    </style>
+    .wallet {
+      margin: 30px auto;
+      max-width: 460px;
+      text-align: left;
+      padding: 18px 18px;
+      border-radius: 18px;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+      background-color: rgba(53, 50, 126, 0.09);
+    }
+
+    .wallet::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      padding: 1px;
+      border-radius: 18px;
+      background: linear-gradient(
+        120deg,
+        rgba(104, 100, 187, 0.12),
+        rgba(207, 207, 212, 0.18),
+        rgba(104, 100, 187, 0.12)
+      );
+      background-size: 300% 300%;
+      animation: borderShimmer 12s ease-in-out infinite;
+      opacity: 0.65;
+      z-index: -1;
+      -webkit-mask: 
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+    }
+
+    @keyframes borderShimmer {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .wallet-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      width: 100%;
+    }
+
+    .wallet-label {
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      font-size: 22px;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      color: #6864bb;
+      text-align: left;
+      margin: 0;
+    }
+
+    .wallet-buttons {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+      align-items: center;
+      flex-wrap: nowrap;
+    }
+
+    .wallet-address {
+      font-family: monospace;
+      font-size: 16px;
+      color: #35327e;
+      word-break: break-word;
+      margin-top: 14px;
+      line-height: 1.6;
+      text-align: left;
+    }
+
+    .qr-code {
+      display: none;
+      margin-top: 18px;
+      text-align: left;
+    }
+
+    .qr-code img {
+      width: 150px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0px 0px 18px rgba(104, 100, 187, 0.25);
+    }
+
+    a {
+      color: #a29ef1;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+      color: #cfcfd4;
+    }
+
+    .contact-line {
+      white-space: nowrap;
+      font-size: 21px;
+      margin-top: 55px;
+      color: #6864bb;
+    }
+
+    footer {
+      margin-top: 25px;
+      padding: 20px 0 30px 0;
+      font-size: 17px;
+      color: #6864bb;
+      font-family: 'Libre Baskerville', serif;
+      font-weight: 400;
+      line-height: 1.3;
+    }
+
+    .footer-logo {
+      width: 94px;
+      height: 94px;
+      object-fit: contain;
+      margin-bottom: 2px;
+    }
+
+    footer a {
+      color: #a29ef1;
+      text-decoration: none;
+      font-weight: 400;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+      color: #cfcfd4;
+    }
+
+    #copy-toast {
+      position: fixed;
+      top: 25px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: rgba(53, 50, 126, 0.85);
+      color: #cfcfd4;
+      padding: 12px 22px;
+      border-radius: 30px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 0.6px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+      z-index: 9999;
+      box-shadow: 0px 0px 30px rgba(104, 100, 187, 0.65);
+    }
+
+    #copy-toast.show {
+      opacity: 1;
+    }
+
+    @media (max-width: 600px) {
+      .home-button {
+        top: 16px;
+        right: 16px;
+        width: 56px;
+        height: 56px;
+      }
+      .wallet { max-width: 90%; padding: 16px; }
+      .wallet-header { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .wallet-buttons { width: 100%; justify-content: flex-start; }
+      .contact-line { white-space: normal; }
+      .logo { width: 80%; }
+    }
+  </style>
 </head>
+
 <body>
+
+  <!-- Fixed Home Button – pure PNG, no alterations -->
+  <a href="https://demianism.org" class="home-button" title="Back to Home">
+    <img src="home-icon.png" alt="Home">
+  </a>
+
+  <div id="copy-toast">Copied!</div>
+
+  <div class="container">
+
     <img src="demianismlogo.png" alt="Demianism Logo" class="logo">
-    <h1>CRYPTO DONATIONS</h1>
-    <p>Support Demianism and the work of Barabeke with BTC, ETH, SOL, ADA, DOGE, XMR.</p>
-    <p>You can send your donations to the following wallets:</p>
 
+    <h1>Crypto Donations</h1>
+
+    <p>
+      Support Demianism & the work of Barabeke with<br>
+      BTC, ETH, BASE, SOL, ADA, DOGE, or XMR.
+    </p>
+
+    <p>
+      You can send your donation to one of these wallets:
+    </p>
+
+    <!-- BTC -->
     <div class="wallet">
-        <div class="wallet-header">
-            <div class="wallet-label">Bitcoin (BTC)</div>
-            <button class="copy-btn" onclick="copyToClipboard('bc1q36jacu2we7ft9lvgxeyj5vah7yxglnhezavrye')">Copy</button>
-            <button class="qr-toggle" id="toggle-btc" onclick="toggleQR('qr-btc', this)">Show QR</button>
+      <div class="wallet-header">
+        <div class="wallet-label">Bitcoin (BTC)</div>
+        <div class="wallet-buttons">
+          <button class="button-main" onclick="copyToClipboard('bc1q36jacu2we7ft9lvgxeyj5vah7yxglnhezavrye')">Copy</button>
+          <button class="button-main" onclick="toggleQR('qr-btc', this)">Show QR</button>
         </div>
-        <div class="wallet-address">bc1q36jacu2we7ft9lvgxeyj5vah7yxglnhezavrye</div>
-        <div class="qr-code" id="qr-btc">
-            <img src="qr-btc.png" alt="BTC QR Code">
-        </div>
+      </div>
+      <div class="wallet-address">bc1q36jacu2we7ft9lvgxeyj5vah7yxglnhezavrye</div>
+      <div class="qr-code" id="qr-btc">
+        <img src="qr-btc.png" alt="BTC QR Code">
+      </div>
     </div>
 
+    <!-- ETH -->
     <div class="wallet">
-        <div class="wallet-header">
-            <div class="wallet-label">Ethereum (ETH)</div>
-            <button class="copy-btn" onclick="copyToClipboard('0x5f11b2A7e3A5a7aCb270C3984b125C3F15d61Df2')">Copy</button>
-            <button class="qr-toggle" id="toggle-eth" onclick="toggleQR('qr-eth', this)">Show QR</button>
+      <div class="wallet-header">
+        <div class="wallet-label">Ethereum (ETH)</div>
+        <div class="wallet-buttons">
+          <button class="button-main" onclick="copyToClipboard('0x5f11b2A7e3A5a7aCb270C3984b125C3F15d61Df2')">Copy</button>
+          <button class="button-main" onclick="toggleQR('qr-eth', this)">Show QR</button>
         </div>
-        <div class="wallet-address">0x5f11b2A7e3A5a7aCb270C3984b125C3F15d61Df2</div>
-        <div class="qr-code" id="qr-eth">
-            <img src="qr-eth.png" alt="ETH QR Code">
-        </div>
+      </div>
+      <div class="wallet-address">0x5f11b2A7e3A5a7aCb270C3984b125C3F15d61Df2</div>
+      <div class="qr-code" id="qr-eth">
+        <img src="qr-eth.png" alt="ETH QR Code">
+      </div>
     </div>
 
+    <!-- BASE -->
     <div class="wallet">
-        <div class="wallet-header">
-            <div class="wallet-label">Solana (SOL)</div>
-            <button class="copy-btn" onclick="copyToClipboard('44X4RsXKJYyTFnY62rEL1fFJDjpc2VvUvrx2XEviHsRg')">Copy</button>
-            <button class="qr-toggle" id="toggle-sol" onclick="toggleQR('qr-sol', this)">Show QR</button>
+      <div class="wallet-header">
+        <div class="wallet-label">Base (ETH)</div>
+        <div class="wallet-buttons">
+          <button class="button-main" onclick="copyToClipboard('0x5f11b2A7e3A5a7aCb270C3984b125C3F15d61Df2')">Copy</button>
+          <button class="button-main" onclick="toggleQR('qr-base', this)">Show QR</button>
         </div>
-        <div class="wallet-address">44X4RsXKJYyTFnY62rEL1fFJDjpc2VvUvrx2XEviHsRg</div>
-        <div class="qr-code" id="qr-sol">
-            <img src="qr-sol.png" alt="SOL QR Code">
-        </div>
+      </div>
+      <div class="wallet-address">0x5f11b2A7e3A5a7aCb270C3984b125C3F15d61Df2</div>
+      <div class="qr-code" id="qr-base">
+        <img src="qr-eth.png" alt="BASE QR Code">
+      </div>
     </div>
 
+    <!-- SOL -->
     <div class="wallet">
-        <div class="wallet-header">
-            <div class="wallet-label">Cardano (ADA)</div>
-            <button class="copy-btn" onclick="copyToClipboard('addr1q9d72f4lmtaj0gcddc5nrqceshmfv7vw3w8cjdzfexuzex2s2mpmtae6sy78qvwqs8py3xntacc335t45auntkvpf86s483n5j')">Copy</button>
-            <button class="qr-toggle" id="toggle-ada" onclick="toggleQR('qr-ada', this)">Show QR</button>
+      <div class="wallet-header">
+        <div class="wallet-label">Solana (SOL)</div>
+        <div class="wallet-buttons">
+          <button class="button-main" onclick="copyToClipboard('44X4RsXKJYyTFnY62rEL1fFJDjpc2VvUvrx2XEviHsRg')">Copy</button>
+          <button class="button-main" onclick="toggleQR('qr-sol', this)">Show QR</button>
         </div>
-        <div class="wallet-address">addr1q9d72f4lmtaj0gcddc5nrqceshmfv7vw3w8cjdzfexuzex2s2mpmtae6sy78qvwqs8py3xntacc335t45auntkvpf86s483n5j</div>
-        <div class="qr-code" id="qr-ada">
-            <img src="qr-ada.png" alt="ADA QR Code">
-        </div>
+      </div>
+      <div class="wallet-address">44X4RsXKJYyTFnY62rEL1fFJDjpc2VvUvrx2XEviHsRg</div>
+      <div class="qr-code" id="qr-sol">
+        <img src="qr-sol.png" alt="SOL QR Code">
+      </div>
     </div>
 
+    <!-- ADA -->
     <div class="wallet">
-        <div class="wallet-header">
-            <div class="wallet-label">Doge (DOGE)</div>
-            <button class="copy-btn" onclick="copyToClipboard('DFjTLgK7ELhLYWk7vcYW6ZQSKq1mjt9nLM')">Copy</button>
-            <button class="qr-toggle" id="toggle-doge" onclick="toggleQR('qr-doge', this)">Show QR</button>
+      <div class="wallet-header">
+        <div class="wallet-label">Cardano (ADA)</div>
+        <div class="wallet-buttons">
+          <button class="button-main" onclick="copyToClipboard('addr1q9d72f4lmtaj0gcddc5nrqceshmfv7vw3w8cjdzfexuzex2s2mpmtae6sy78qvwqs8py3xntacc335t45auntkvpf86s483n5j')">Copy</button>
+          <button class="button-main" onclick="toggleQR('qr-ada', this)">Show QR</button>
         </div>
-        <div class="wallet-address">DFjTLgK7ELhLYWk7vcYW6ZQSKq1mjt9nLM</div>
-        <div class="qr-code" id="qr-doge">
-            <img src="qr-doge.png" alt="DOGE QR Code">
-        </div>
+      </div>
+      <div class="wallet-address">addr1q9d72f4lmtaj0gcddc5nrqceshmfv7vw3w8cjdzfexuzex2s2mpmtae6sy78qvwqs8py3xntacc335t45auntkvpf86s483n5j</div>
+      <div class="qr-code" id="qr-ada">
+        <img src="qr-ada.png" alt="ADA QR Code">
+      </div>
     </div>
 
+    <!-- DOGE -->
     <div class="wallet">
-        <div class="wallet-header">
-            <div class="wallet-label">Monero (XMR)</div>
-            <button class="copy-btn" onclick="copyToClipboard('41jgBqVTvAWP3pSsmCA1FoYA3sNq6JhCbJZ4RJQGwBGwbc94tHzP3XF9G8bM4aFZFf1jxhbMfWPtWDZuCUspL6e1SRzZTc5')">Copy</button>
-            <button class="qr-toggle" id="toggle-xmr" onclick="toggleQR('qr-xmr', this)">Show QR</button>
+      <div class="wallet-header">
+        <div class="wallet-label">Doge (DOGE)</div>
+        <div class="wallet-buttons">
+          <button class="button-main" onclick="copyToClipboard('DFjTLgK7ELhLYWk7vcYW6ZQSKq1mjt9nLM')">Copy</button>
+          <button class="button-main" onclick="toggleQR('qr-doge', this)">Show QR</button>
         </div>
-        <div class="wallet-address">41jgBqVTvAWP3pSsmCA1FoYA3sNq6JhCbJZ4RJQGwBGwbc94tHzP3XF9G8bM4aFZFf1jxhbMfWPtWDZuCUspL6e1SRzZTc5</div>
-        <div class="qr-code" id="qr-xmr">
-            <img src="qr-xmr.png" alt="XMR QR Code">
-        </div>
+      </div>
+      <div class="wallet-address">DFjTLgK7ELhLYWk7vcYW6ZQSKq1mjt9nLM</div>
+      <div class="qr-code" id="qr-doge">
+        <img src="qr-doge.png" alt="DOGE QR Code">
+      </div>
     </div>
 
-    <p>If you want to confirm the addresses, feel free to reach out to Barabeke <a href="https://x.com/barabeke">on X</a> or <a href="https://t.me/barabeke">on Telegram</a>.</p>
+    <!-- XMR -->
+    <div class="wallet">
+      <div class="wallet-header">
+        <div class="wallet-label">Monero (XMR)</div>
+        <div class="wallet-buttons">
+          <button class="button-main" onclick="copyToClipboard('41jgBqVTvAWP3pSsmCA1FoYA3sNq6JhCbJZ4RJQGwBGwbc94tHzP3XF9G8bM4aFZFf1jxhbMfWPtWDZuCUspL6e1SRzZTc5')">Copy</button>
+          <button class="button-main" onclick="toggleQR('qr-xmr', this)">Show QR</button>
+        </div>
+      </div>
+      <div class="wallet-address">41jgBqVTvAWP3pSsmCA1FoYA3sNq6JhCbJZ4RJQGwBGwbc94tHzP3XF9G8bM4aFZFf1jxhbMfWPtWDZuCUspL6e1SRzZTc5</div>
+      <div class="qr-code" id="qr-xmr">
+        <img src="qr-xmr.png" alt="XMR QR Code">
+      </div>
+    </div>
 
-    <p>If you haven't downloaded the book Demianism 1.0 yet, get it <a href="https://demianism.org">here</a>.</p>
+    <p class="contact-line">
+      If you want to confirm the addresses, reach out to Barabeke <a href="https://x.com/barabeke" target="_blank">on X</a> or <a href="https://t.me/barabeke" target="_blank">on Telegram</a>.
+    </p>
 
-    <p>Blessed be those who through their donations will give Demianism a chance <span class="emoji">🙏</span></p>
+    <p class="contact-line" style="margin-top: 10px;">
+      If you haven't downloaded the book of Demianism yet, get it <a href="https://demianism.org">here</a>.
+    </p>
 
-    <script>
-        function copyToClipboard(text) {
-            navigator.clipboard.writeText(text).then(() => {
-                alert('Address copied to clipboard!');
-            }).catch(err => {
-                console.error('Failed to copy: ', err);
-            });
-        }
+    <footer>
+      <img src="demianismlogo.png" alt="Demianism Logo" class="footer-logo">
+      <div>
+        © 2026 <a href="https://linktr.ee/barabeke" target="_blank">Barabeke</a>
+      </div>
+      <div>
+        Content licensed under CC BY-NC-ND 4.0
+      </div>
+    </footer>
 
-        function toggleQR(id, button) {
-            const qrDiv = document.getElementById(id);
-            if (qrDiv.style.display === 'block') {
-                qrDiv.style.display = 'none';
-                button.textContent = 'Show QR';
-                button.classList.remove('active');
-            } else {
-                qrDiv.style.display = 'block';
-                button.textContent = 'Hide QR';
-                button.classList.add('active');
-            }
-        }
-    </script>
+  </div>
+
+  <script>
+    let toastTimeout;
+
+    function showToast(message) {
+      const toast = document.getElementById("copy-toast");
+      toast.textContent = message;
+      toast.classList.add("show");
+
+      clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.remove("show");
+      }, 1800);
+    }
+
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        showToast("Copied!");
+      }).catch(err => {
+        console.error("Failed to copy: ", err);
+        showToast("Copy failed");
+      });
+    }
+
+    function toggleQR(id, button) {
+      const qrDiv = document.getElementById(id);
+
+      if (qrDiv.style.display === "block") {
+        qrDiv.style.display = "none";
+        button.textContent = "Show QR";
+      } else {
+        qrDiv.style.display = "block";
+        button.textContent = "Hide QR";
+      }
+    }
+  </script>
+
 </body>
 </html>
